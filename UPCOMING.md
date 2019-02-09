@@ -12,12 +12,18 @@
 
 # Future Tasks
 
-*What we plan to work on next, in chronological order. Subject to change.*
+*What we plan to work on next, in rough chronological order. Subject to change.*
 
-### Mod recruitment (chaos)
+### Recruitments (chaos)
+- devs
+- mods
+- art
+- commentary
+- and more
 
 ### Various PBR tasks (ferraro)
-- More gimmicks
 - Bet-hiding suggestions
 - Try any popular bonus alternatives in a short season
+- Nerf bet bonuses
+- More gimmicks
 - Input decay/timeout suggestions (try out in a gimmick)
