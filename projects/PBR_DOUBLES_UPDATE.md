@@ -188,11 +188,11 @@ Team 4 controlls zapdos and entei.
 
 Each team can switch between their two pokemon, if switching is on.  When any pokemon faints, the other pokemon on that team gets sent out, unless fainted.
 
-If team 2 ends up playing both their pokemon at once (meaning all team 1's pokemon are fainted), then their second pokemon is controlled by defiance, rather than by team 1. 
+If team 2 ends up playing both their pokemon at once (usually because all team 1's pokemon are fainted), then their second pokemon is controlled by defiance, rather than by team 1. 
 
 If all pokemon on the red corner (team 3 + team 4) are fainted, and both teams on the blue corner (team 1, team 2) still have a Pokemon remaining, we can either:
-- draw between teams 1 and 2
-- declare a winner based on tiebreak rules
+- split winnings between teams 1 and 2
+- declare either team 1 or 2 as the winner, based on tiebreak rules
 
 ## Issues
 Moves like baton pass, u-turn, roar, metronome, etc. could cause team 1 to end up fighting with both their pokemon, while team 2's pokemon aren't fighting at all.  Should these moves be banned? Note we can still ensure that team 1's second Pokemon is controlled by defiance, and not by team 2. 
