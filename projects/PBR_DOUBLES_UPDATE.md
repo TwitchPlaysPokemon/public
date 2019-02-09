@@ -11,31 +11,31 @@ Most of this document is info-providing, but a few portions are more heavily opi
 
 *Might be deployed in phases, e.g. defiance doubles after anniversary run, then doubles with targeting some time later, and battle royale some time after that.*
 
-## Mostly complete
+## Complete but needs lots of testing
 
 1. Support (excluding overlay changes) for 6v6 double battles with targeting
-1. Detection of HP, PP, moves, ability, etc. for all active Pokemon, valid only at move/switch selection times
+1. Detection of HP, PP, moves, ability, etc. for all Pokemon*
 1. Detection of all softlocks
 1. Ability to retry broken matches, both automatically and manually
 1. Faster PBR match setup (45s first start, 30s every match after) which also helps stability
 1. Toggleable announcer during matches
 1. Toggleable ability to avoid trying the same move / switch more than once (toggle on for defiance at least)
 1. Ability to make input selections atomic with respect to player inputs
+1. Modifiable input selection timer (in seconds)
+1. Modifiable match timer (a legitimate PBR feature, match ends after x minutes)
 
 ## Pending
 
 1. Overlay support for 4v4+
 1. Overlay support for doubles with targeting
 1. Overlay improvements for readability, particularly on mobile
-1. Detection for HP, PP, moves, ability, etc. for the out-of-battle Pokemon, valid only at move/switch selection times
-1. Detection for HP, PP, moves, ability, etc at all times (not sure if possible)
-1. Modifiable move selection timer (probably very easy)
-1. Modifiable match timer as a gimmick (a legitimate PBR feature, match ends after x minutes) (probably very easy)
+1. Modifiable Pokemon types and base stats**
 1. Battle royale matches (pbr double battles with chat split into four teams)
 1. Mysterious surprise feature (won't affect gameplay)
 
+*[caveat, see here](##live-data-caveats)
 
-
+**accomplished by changing the type and base stats of an entire species for the match. So if Ivysaur's data got changed, it would no longer be possible to have a regular Ivysaur in that match.
 
 # Overlay changes
 
@@ -51,6 +51,7 @@ Matches greater than 4v4 generally take too long for TPP, especially in singles.
 
 Some things that could be improved with the current overlay, *IF* we wanted to keep the style of showing pokemon side by side (probably won't work for 4v4+):
 
+- Add live pkmn data (HP, PP, etc)
 - Easier to read stats (could display on 2 rows, 3 stats per row, instead of the current 6 in a single row)
 - Easier to read font
 - Easier to read pkmn names (could be white instead of blue / red)
@@ -58,6 +59,14 @@ Some things that could be improved with the current overlay, *IF* we wanted to k
 - Easier to read moves (could stop coloring moves according to the move percentage. Could also try capitalizing names, which yields a bit more vertical space)
 - Easier to read PP (not sure how to achieve, maybe change to purple for <5 PP, or add more space between the PP bars)
 - Easier to read sidebars (widen sidebars a bit. Color background black, like in the stadium 2 days?)
+
+## Live data caveats
+
+Internally, PBR updates team data all at once rather than in a play-by-play fashion. This update happens immediately after PBR finishes accepting move / switch selections.
+
+Example 1: A Pokemon gets damaged 3 times in 1 turn (eg, attack + hail + psn). The internally stored HP doesn't experience 3 separate decreases. Instead, it decreases instantly (even before animations play) to the resulting HP after hail and psn. As far as I can tell, PBR doesn't even store the intermediate HP values anywhere in memory.
+
+Example 2: Ditto transforms and then gets roared away in the same turn. The internal teams data never gets updated with Ditto's new moves, stats, etc, because Ditto doesn't have those at the end of the turn.
 
 ## Shrinking the PBR popup guis
 
@@ -155,7 +164,38 @@ Some have suggested disallowing ally targeting, but ally targeting does have man
 Ally targeting in defiance is another question. Should it never happen? Happen 10-20% of the time? Should we have two doubles defiance modes, one with ally targeting and the other without?
 
 
+# Battle Royale
 
+An imitation "Battle Royale" mode, which would just be a pbr doubles battle, with chat split into four teams. 
+
+Example:
+
+Chat is split into teams 1, 2, 3, and 4 (can be colors or whatever)
+
+The 4v4 matchup might be:  
+PBR's "blue corner": vaporeon, jolteon, flareon, umbreon  
+vs  
+PBR's "red corner": moltres, zapdos, articuno, and entei.  
+
+It's doubles, so the initial matchup is umbreon and flareon vs moltres and zapdos.
+
+Team 1 controls umbreon and jolteon.  
+Team 2 controls flareon and vaporeon.  
+Team 3 controls moltres and articuno.  
+Team 4 controlls zapdos and entei.  
+
+Each team can switch between their two pokemon, if switching is on.  When any pokemon faints, the other pokemon on that team gets sent out, unless fainted.
+
+If team 2 ends up playing both their pokemon at once (meaning all team 1's pokemon are fainted), then their second pokemon is controlled by defiance, rather than by team 1. 
+
+If all pokemon on the red corner (team 3 + team 4) are fainted, and both teams on the blue corner (team 1, team 2) still have a Pokemon remaining, we can either:
+- draw between teams 1 and 2
+- declare a winner based on tiebreak rules
+
+## Issues
+Moves like baton pass, u-turn, roar, metronome, etc. could cause team 1 to end up fighting with both their pokemon, while team 2's pokemon aren't fighting at all.  Should these moves be banned? Note we can still ensure that team 1's second Pokemon is controlled by defiance, and not by team 2. 
+
+Do we need to remove/replace moves like surf for being OP? 
 
 # Resources
 
