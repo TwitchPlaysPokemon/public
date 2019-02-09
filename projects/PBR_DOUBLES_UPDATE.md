@@ -23,6 +23,7 @@ Most of this document is info-providing, but a few portions are more heavily opi
 1. Ability to make input selections atomic with respect to player inputs
 1. Modifiable input selection timer (in seconds)
 1. Modifiable match timer (a legitimate PBR feature, match ends after x minutes)
+1. Per-mode token match cooldowns
 
 ## Pending
 
@@ -39,26 +40,31 @@ Most of this document is info-providing, but a few portions are more heavily opi
 
 # Overlay changes
 
-*Note: A new overlay design (not implementation, just the design) will hopefully be released to the public in the next 2-3 weeks.*
-
 See some mockups and past designs under [Resources](#resources)
 
 According to the moveset team, doubles is generally faster than singles, and 4v4 doubles is roughly analogous to 3v3 singles.  Therefore we should aim for an overlay design that comfortably supports 4v4 doubles with targeting.
 
 Matches greater than 4v4 generally take too long for TPP, especially in singles. That said, it'd be nice to support 6v6, as we might have some game formats (tournaments?) where a 6v6 as a finale could be appropriate.
 
-## Possible improvements to current layout
 
-Some things that could be improved with the current overlay, *IF* we wanted to keep the style of showing pokemon side by side (probably won't work for 4v4+):
+## "New Overlay"
 
-- Add live pkmn data (HP, PP, etc)
-- Easier to read stats (could display on 2 rows, 3 stats per row, instead of the current 6 in a single row)
-- Easier to read font
+The "New Overlay" is being designed by Red, Lightning, and M4. This design will hopefully be released to the public in the next 0-3 weeks. After the overlay design is approved, it will need to be implemented in code, which will take some time- probably months.
+
+## Current overlay improvements
+
+While the new overlay is being worked on for a potentially long time, we plan to alter the current overlay to add support for 4v4 with doubles targeting.  The goal is to implement a decent looking targeting and 4v4 system within 4-6 weeks, possibly borrowing some inspiration from the new overlay design.
+
+Some things that could be improved with the current overlay:
+
+- Show live pkmn data (HP, PP, etc)
+- Remove stats or make them easier to read (could display on 2 rows, 3 stats per row, instead of the current 6 in a single row)
+- Use a more legible font
 - Easier to read pkmn names (could be white instead of blue / red)
 - Easier to read ability / items (Could display on 2 rows instead of 1)
-- Easier to read moves (could stop coloring moves according to the move percentage. Could also try capitalizing names, which yields a bit more vertical space)
-- Easier to read PP (not sure how to achieve, maybe change to purple for <5 PP, or add more space between the PP bars)
-- Easier to read sidebars (widen sidebars a bit. Color background black, like in the stadium 2 days?)
+- Easier to read moves (could stop coloring moves according to the move percentage. Could also try all-caps names, which yields a bit more vertical space)
+- Easier to read PP (not sure how to achieve, maybe change to purple for <5 PP, or add more space between the PP bars). Darken moves when they run out of PP.
+- Wider sidebars, so there's more horizontal space for bet info. Color background black, like in the stadium 2 days?
 
 ## Live data caveats
 
@@ -73,10 +79,6 @@ Example 2: Ditto transforms and then gets roared away in the same turn. The inte
 The HP bars + move select popups as a whole can be shifted left/right/up/down or shrunk. 
 
 Shrinking these popups a little lets us widen the sidebars.  This gives more space for vital info, but widen them too much and PBR might feel squished.
-
-## Moving to 4v4
-
-4v4 & above prevents us from lining up moves into rows, which I think was very helpful visually for players. Do we want to keep the lined-up moves style for 3v3 matches?
 
 ## Removing the PBR popup guis
 
@@ -206,7 +208,7 @@ Do we need to remove/replace moves like surf for being OP?
 
 ### Imgur albums
 
-[Simple doubles & 4v4 overlay examples](https://imgur.com/a/MkYUCXV)  
+[Ugly doubles & 4v4 overlay examples](https://imgur.com/a/MkYUCXV)  
 [Current overlay screenshots](https://imgur.com/a/rtzhZWZ)  
 [Streamer's & Stadium 2 overlays](https://imgur.com/a/83rNOMn)
 
