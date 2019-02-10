@@ -1,7 +1,9 @@
 # Issues (Bug Reporting & Feature Requests)
 
-Report bugs and request features simply by posting in [public-dev](https://discordapp.com/invite/5HrkPR7). If necessary, a developer will open a new issue or update existing issue.
-    
+Issues include bugs and features requests. [Click here to see all open issues.](https://github.com/TwitchPlaysPokemon/public/issues) 
+ 
+To report bugs or request features, simply post in [public-dev](https://discordapp.com/invite/5HrkPR7). If necessary, a developer will open a new issue or update existing issue.
+
 Bug reports should as specific as possible. If relevant, please try to include:
 - a link to chatlogs
 - a link to a Twitch clip/video
