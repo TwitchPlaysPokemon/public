@@ -219,5 +219,5 @@ Do we need to remove/replace moves like surf for being OP?
 [Random overlay comments](https://www.reddit.com/r/twitchplayspokemon/comments/a6tuwu/the_cutest_fusion_ever/ebydsau)
 
 ### Videos
-[Doubles Demo](https://www.youtube.com/watch?v=HJI9-ADqrUA)
+[Doubles Demo](https://www.youtube.com/watch?v=HJI9-ADqrUA)  
 [A TPP Stadium 2 match](https://www.youtube.com/watch?v=-cYMaQbRc0g)
