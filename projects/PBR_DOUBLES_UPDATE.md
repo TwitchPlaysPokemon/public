@@ -68,11 +68,15 @@ Some things that could be improved with the current overlay:
 
 ## Live data caveats
 
-Internally, PBR updates team data all at once rather than in a play-by-play fashion. This update happens immediately after PBR finishes accepting move / switch selections.
+Internally, PBR doesn't update internal data (hp, moves, etc) in a play-by-play fashion. Instead it usually* updates twice per turn, in this order:  
+1: Update data to the result after all attacks are accounted for. Occurs immediately after all selections are made for the turn, but before the attack animations actually play.  
+2: Update data to the result after residual damage like hail and poison. Occurs immediately after all move/attack animations finish playing, but before residual damage animations play.
 
-Example 1: A Pokemon gets damaged 3 times in 1 turn (eg, attack + hail + psn). The internally stored HP doesn't experience 3 separate decreases. Instead, it decreases instantly (even before animations play) to the resulting HP after hail and psn. As far as I can tell, PBR doesn't even store the intermediate HP values anywhere in memory.
+As far as I can tell, PBR doesn't even store the intermediate HP values between multiple attacks to a single pokemon per turn anywhere in memory.
 
-Example 2: Ditto transforms and then gets roared away in the same turn. The internal teams data never gets updated with Ditto's new moves, stats, etc, because Ditto doesn't have those at the end of the turn.
+Example: Ditto transforms and then gets roared away in the same turn. The internal teams data never gets updated with Ditto's new moves, stats, etc, because Ditto doesn't have those at the end of the turn.
+
+*Data may more than twice per turn after mid-turn user input, such as selecting which pokemon to switch to after baton pass. 
 
 ## Shrinking the PBR popup guis
 
