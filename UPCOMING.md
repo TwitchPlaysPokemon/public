@@ -4,7 +4,12 @@
 
 *What we're working on right now.*
 
-### Moderation features (chaos)
+### Recruitments (chaos)
+- devs
+- mods
+- art
+- commentary
+- and more
 
 ### PBR doubles update (ferraro)
 
@@ -13,13 +18,6 @@
 # Future Tasks
 
 *What we plan to work on next, in rough chronological order. Subject to change.*
-
-### Recruitments (chaos)
-- devs
-- mods
-- art
-- commentary
-- and more
 
 ### Various PBR tasks (ferraro)
 - Bet-hiding suggestions
