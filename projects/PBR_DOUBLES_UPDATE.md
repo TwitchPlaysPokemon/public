@@ -38,6 +38,64 @@ Most of this document is info-providing, but a few portions are more heavily opi
 
 **accomplished by changing the type and base stats of an entire species for the match. So if Ivysaur's data got changed, it would no longer be possible to have a regular Ivysaur in that match.
 
+# Live data reading/writing
+
+## Caveats
+
+Internally, PBR doesn't update internal data (hp, moves, etc) in a play-by-play fashion. Instead it usually* updates twice per turn, in this order:  
+1: Update data to the result after all attacks are accounted for. Occurs immediately after all selections are made for the turn, but before the attack animations actually play.  
+2: Update data to the result after residual damage like hail and poison. Occurs immediately after all move/attack animations finish playing, but before residual damage animations play.
+
+As far as I can tell, PBR doesn't even store the intermediate HP values between multiple attacks to a single Pokemon per turn anywhere in memory.
+
+Example 1: Pidgey gets damaged several times (attacked by 2 Pokemon + recoil + hail + poison). Internal HP is decreased exactly twice:    
+1. decreased for both attacks + recoil before attack animations play  
+2. decreased for hail + poison before the residual dmg animations play 
+
+Example 2: Ditto transforms and then gets roared away in the same turn. The internal teams data never gets updated with Ditto's new moves, stats, etc, because Ditto doesn't have those at the end of the turn.
+
+*Data may more than twice per turn after mid-turn user input, such as selecting which Pokemon to switch to after baton pass. 
+
+## Modifying
+
+Most live data is modifiable, but the caveats above apply and cause some limitations. These apply particularly to any volatile conditions.  Volatile conditions can only be written for active (currently sent out) Pokemon, because inactive Pokemon literally don't have bytes representing volatile conditions.   
+
+### Nonvolatile conditions
+
+- HP 
+- status, including toxic countup and sleep countdown.  
+  
+These can all be set before the first Pokemon of the match get sent out.
+
+Notes:
+
+While the HP bar will report "FRZ", "SLP", etc, the first Pokemon sent out in the match will not appear to be frozen (not moving) or asleep (eyes closed). The animation does correct itself as soon as the Pokemon attempt to use their first move.
+
+A Pokemon's ability or berry may trigger when being sent out (woken up by insomnia, using a sitrus berry on low HP)
+
+### Volatile conditions
+
+All Pokemon sent into battle can use a move on that turn. That move selection time is ideal for setting an active Pokemon's volatile condition. Setting such a condition in a gimmick might be described as:    
+**Pokemon get \<volatile condition> immediately before using their first move.**
+
+For example, if we wanted a mode where all Pokemon start at +1 defense, it is simply not possible to ensure Diglett gets +1 defense when it comes out mid-turn (think getting roared in, and then attacked) because the game will perform a single atomic step of sending in diglett and damaging it.  There is no way to stop the game after diglett is sent in, increase its defense, and allow it to proceed with taking damage based on it having +1.
+
+Given these caveats, I think the "safe" conditions to set are:
+- infatuation
+- taunt
+- torment
+- focus (focus energy)
+- curse
+- confusion
+
+Notes:
+
+Curse would have to be described as mentioned previously: **Pokemon get cursed immediately before using their first move.**
+
+Confusion is problematic because of how it can be cured.  A Pokemon confused and having either own tempo or a persim berry will be cured after any Pokemon- including itself- finishes using a move.  This basically means if it's the fasted Pokemon, it may self-hit before getting cured. We could just remove own tempo and persim berries if we want a confusion gimmick.
+
+Pokemon can be infatuated with themselves. Remember that infatuation will end if the infatuatee leaves the field. 
+
 # Overlay changes
 
 See some mockups and past designs under [Resources](#resources)
@@ -65,65 +123,6 @@ Some things that could be improved with the current overlay:
 - Easier to read moves (could stop coloring moves according to the move percentage. Could also try all-caps names, which yields a bit more vertical space)
 - Easier to read PP (not sure how to achieve, maybe change to purple for <5 PP, or add more space between the PP bars). Darken moves when they run out of PP.
 - Wider sidebars, so there's more horizontal space for bet info. Color background black, like in the stadium 2 days?
-
-## Live data reading/writing
-
-### Caveats
-
-Internally, PBR doesn't update internal data (hp, moves, etc) in a play-by-play fashion. Instead it usually* updates twice per turn, in this order:  
-1: Update data to the result after all attacks are accounted for. Occurs immediately after all selections are made for the turn, but before the attack animations actually play.  
-2: Update data to the result after residual damage like hail and poison. Occurs immediately after all move/attack animations finish playing, but before residual damage animations play.
-
-As far as I can tell, PBR doesn't even store the intermediate HP values between multiple attacks to a single Pokemon per turn anywhere in memory.
-
-Example 1: Pidgey gets damaged several times (attacked by 2 Pokemon + recoil + hail + poison). Internal HP is decreased exactly twice:    
-1. decreased for both attacks + recoil before attack animations play  
-2. decreased for hail + poison before the residual dmg animations play 
-
-Example 2: Ditto transforms and then gets roared away in the same turn. The internal teams data never gets updated with Ditto's new moves, stats, etc, because Ditto doesn't have those at the end of the turn.
-
-*Data may more than twice per turn after mid-turn user input, such as selecting which Pokemon to switch to after baton pass. 
-
-### Modifying
-
-Most live data is modifiable, but the caveats above apply and cause some limitations. These apply particularly to any volatile conditions.  Volatile conditions can only be written for active (currently sent out) Pokemon, because inactive Pokemon literally don't have bytes representing volatile conditions.   
-
-#### Nonvolatile conditions
-
-- HP 
-- status, including toxic countup and sleep countdown.  
-  
-These can all be set before the first Pokemon of the match get sent out.
-
-Notes:
-
-While the HP bar will report "FRZ", "SLP", etc, the first Pokemon sent out in the match will not appear to be frozen (not moving) or asleep (eyes closed). The animation does correct itself as soon as the Pokemon attempt to use their first move.
-
-A Pokemon's ability or berry may trigger when being sent out (woken up by insomnia, using a sitrus berry on low HP)
-
-#### Volatile conditions
-
-All Pokemon sent into battle can use a move on that turn. That move selection time is ideal for setting an active Pokemon's volatile condition. Setting such a condition in a gimmick might be described as:    
-**Pokemon get \<volatile condition> immediately before using their first move.**
-
-For example, if we wanted a mode where all Pokemon start at +1 defense, it is simply not possible to ensure Diglett gets +1 defense when it comes out mid-turn (think getting roared in, and then attacked) because the game will perform a single atomic step of sending in diglett and damaging it.  There is no way to stop the game after diglett is sent in, increase its defense, and allow it to proceed with taking damage based on it having +1.
-
-Given these caveats, I think the "safe" conditions to set are:
-- infatuation
-- taunt
-- torment
-- focus (focus energy)
-- curse
-- confusion
-
-Notes:
-
-Curse would have to be described as mentioned previously: **Pokemon get cursed immediately before using their first move.**
-
-Confusion is problematic because of how it can be cured.  A Pokemon confused and having either own tempo or a persim berry will be cured after any Pokemon- including itself- finishes using a move.  This basically means if it's the fasted Pokemon, it may self-hit before getting cured. We could just remove own tempo and persim berries if we want a confusion gimmick.
-
-Pokemon can be infatuated with themselves. Remember that infatuation will end if the infatuatee leaves the field. 
-
 
 ## Shrinking the PBR popup guis
 
