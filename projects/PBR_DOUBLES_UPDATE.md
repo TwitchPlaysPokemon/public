@@ -30,13 +30,12 @@ Most of this document is info-providing, but a few portions are more heavily opi
 1. Overlay support for 4v4+
 1. Overlay support for doubles with targeting
 1. Overlay improvements for readability, particularly on mobile
-1. Modifiable Pokemon types and base stats**
+1. Global modifications to species, moves, and effectiveness
 1. Battle royale matches (pbr double battles with chat split into four teams)
 1. Mysterious surprise feature (won't affect gameplay)
 
 *[caveat, see here](##live-data-caveats)
 
-**accomplished by changing the type and base stats of an entire species for the match. So if Ivysaur's data got changed, it would no longer be possible to have a regular Ivysaur in that match.
 
 # Live data reading/writing
 
@@ -95,6 +94,26 @@ Curse would have to be described as mentioned previously: **Pokemon get cursed i
 Confusion is problematic because of how it can be cured.  A Pokemon confused and having either own tempo or a persim berry will be cured after any Pokemon- including itself- finishes using a move.  This basically means if it's the fasted Pokemon, it may self-hit before getting cured. We could just remove own tempo and persim berries if we want a confusion gimmick.
 
 Pokemon can be infatuated with themselves. Remember that infatuation will end if the infatuatee leaves the field. 
+
+
+# Species, moves, and effectiveness
+
+We can also make global modifications to these entities.  These seem to work but aren't thoroughly tested yet.
+
+Species
+- base stats
+- types
+- probaby other things like weight
+
+So if Ivysaur's data got changed to be a poison/ghost type, it would no longer be possible to have a regular Ivysaur in that match.
+
+Moves
+- base power
+- accuracy
+- type
+
+Efectiveness
+- change SE to NVE and back. Can be used to implement Inverse Battles.
 
 # Overlay changes
 
