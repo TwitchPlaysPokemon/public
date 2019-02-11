@@ -90,11 +90,16 @@ Most live data is modifiable, but the caveats above apply and cause some limitat
 
 #### Nonvolatile conditions
 
-Such as HP and status, including toxic countup and sleep countdown.  These can all be set before the first Pokemon of the match get sent out.
+- HP 
+- status, including toxic countup and sleep countdown.  
+  
+These can all be set before the first Pokemon of the match get sent out.
 
-Note: while the HP bar will report "FRZ", "SLP", etc, the first Pokemon sent out in the match will not appear to be frozen (not moving) or asleep (eyes closed). The animation does correct itself as soon as the Pokemon attempt to use their first move.
+Notes:
 
-Note: A Pokemon's ability or berry may trigger when being sent out (woken up by insomnia, using a sitrus berry on low HP)
+While the HP bar will report "FRZ", "SLP", etc, the first Pokemon sent out in the match will not appear to be frozen (not moving) or asleep (eyes closed). The animation does correct itself as soon as the Pokemon attempt to use their first move.
+
+A Pokemon's ability or berry may trigger when being sent out (woken up by insomnia, using a sitrus berry on low HP)
 
 #### Volatile conditions
 
