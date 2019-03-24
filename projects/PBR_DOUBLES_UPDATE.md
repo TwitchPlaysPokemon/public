@@ -4,37 +4,33 @@ We plan to set up a demo for players before deciding various things, but to do s
 
 Most of this document is info-providing, but a few portions are more heavily opinion-based, and should just be considered as points for discussion.
 
-
-
-
 # Features
 
 *Might be deployed in phases, e.g. defiance doubles after anniversary run, then doubles with targeting some time later, and battle royale some time after that.*
 
-## Complete but needs lots of testing
-
-1. Support (excluding overlay changes) for 6v6 double battles with targeting
-1. Live data (HP, PP, moves, ability, etc) reading & writing for all Pokemon*
+## Deployed
+1. Support for defiance double battles
+1. Overlay support for 1v1 - 4v4
+1. [Live data (HP, PP, moves, ability, etc) reading & writing for all Pokemon](#live-data-reading/writing)
 1. Detection of all softlocks
 1. Ability to retry broken matches, both automatically and manually
 1. Faster PBR match setup (45s first start, 30s every match after) which also helps stability
 1. Toggleable announcer during matches
-1. Toggleable ability to avoid trying the same move / switch more than once (toggle on for defiance at least)
-1. Ability to make input selections atomic with respect to player inputs
+1. Ability to avoid trying the same move / switch more than once (toggle on for defiance at least)
+1. [Atomic input selections](##atomic-inputs)
 1. Modifiable input selection timer (in seconds)
 1. Modifiable match timer (a legitimate PBR feature, match ends after x minutes)
 1. Per-mode token match cooldowns
 
-## Pending
+## Complete but needs lots of testing
+1. Support (excluding overlay) for doubles with inputting
 
-1. Overlay support for 4v4+
-1. Overlay support for doubles with targeting
-1. Overlay improvements for readability, particularly on mobile
+## Pending
+1. Overlay improvements
+1. New gimmick ideas, specific mechanics, icons, and implementations that make use of the already deployed features
 1. Global modifications to species, moves, and effectiveness
 1. Battle royale matches (pbr double battles with chat split into four teams)
 1. Mysterious surprise feature (won't affect gameplay)
-
-*[caveat, see here](##live-data-caveats)
 
 
 # Live data reading/writing
@@ -126,13 +122,15 @@ Matches greater than 4v4 generally take too long for TPP, especially in singles.
 
 ## "New Overlay"
 
-The "New Overlay" is being designed by Red, Lightning, and M4. This design will hopefully be released to the public in the next 0-3 weeks. After the overlay design is approved, it will need to be implemented in code, which will take some time- probably months.
+The "New Overlay" is being designed by Red, Lightning, and M4. This design will hopefully be released to the public sometime in 2019 Q2. After the overlay design is approved, it will need to be implemented in code, which will take several months at least.
 
-## Current overlay improvements
+## Temporary overlay redesign
 
-While the new overlay is being worked on for a potentially long time, we plan to alter the current overlay to add support for 4v4 with doubles targeting.  The goal is to implement a decent looking targeting and 4v4 system within 4-6 weeks, possibly borrowing some inspiration from the new overlay design.
+While the new overlay is being worked on for a potentially long time, we have redesigned the current overlay so it can support 6v6 with doubles targeting.  The redesign's goal is to create an overlay with the best layout possible, but not with the impressive animations that the "New Overlay" is exepected to eventually have.
 
-Some things that could be improved with the current overlay:
+The redesign concepts were heavily influenced from multiple past overlays (see [Imgur Albums](###imgur-albums)) and also the "New Overlay", although the latter has not been released to the public yet.
+
+Popularly requested improvements on the old (2018) overlay included:
 
 - Show live pkmn data (HP, PP, etc)
 - Remove stats or make them easier to read (could display on 2 rows, 3 stats per row, instead of the current 6 in a single row)
@@ -140,8 +138,8 @@ Some things that could be improved with the current overlay:
 - Easier to read pkmn names (could be white instead of blue / red)
 - Easier to read ability / items (Could display on 2 rows instead of 1)
 - Easier to read moves (could stop coloring moves according to the move percentage. Could also try all-caps names, which yields a bit more vertical space)
-- Easier to read PP (not sure how to achieve, maybe change to purple for <5 PP, or add more space between the PP bars). Darken moves when they run out of PP.
-- Wider sidebars, so there's more horizontal space for bet info. Color background black, like in the stadium 2 days?
+- Easier to read PP. Darken and cross out moves when they run out of PP.
+- Wider sidebars, so there's more horizontal space for bet info. Darken PBR underneath the sidebars so that the sidebar info is more legible.
 
 ## Shrinking the PBR popup guis
 
@@ -153,19 +151,24 @@ Shrinking these popups a little lets us widen the sidebars.  This gives more spa
 
 One idea is to entirely remove the popups and replace them with our own custom ones. This is hopefully possible, but may require quite a lot of time to achieve on the PBR end of things.
 
-We could then display moves, pp, etc. in big font for all the active Pokemon, and design better targeting / switch popups than what PBR currently has (they are really kind of awful imo).  I don't think this really has any downsides at all.
+We could then display moves, pp, etc. in big font for all the active Pokemon, and design better targeting / switch popups than what PBR currently has (they are really kind of awful imo).
 
-## Adding a permanent active pkmn gui
+## Separating active pkmn
 
-We could probably also shift the "Team Blue's x used y" text to the bottom of the screen, which then frees up the top third of the screen for a custom GUI that doesn't popup but rather stays in place the whole match, and displays info of the active pkmn (2 in singles, up to 4 in doubles).  With so much space available, we could make the active pkmn info much easier to read than if it was constrained to the sidebar space.
+ For each team, players need to easily tell:
+- which pokemon are currently out
+- which one is on the left side / top hp bar, and which is on the right side/ bottom hp bar
 
-This applies to both singles and doubles.
+With the current static positioning (1-2-3-4, top to bottom) it's way too difficult to tell which pokemon are currently out. A little "button" indiciating which pokemon are out would be helpful, but for doubles with inputting, I really think it won't be enough.
 
-### Omitting active Pokemon in the sidebars
+Unfortunately, this also means that sidebar pokemon info will move around every time a switch is made.  It will be frustrating if a pokeset moves elsewhere while a player is reading it.   The active pokemon would also likely be outdated info for anyone with lag, or for everyone in speed mode when Pokemon are switched out very quickly.
 
-We could then omit the active pkmn displays in the sidebars, which frees up more space for player bets and othe sidebar info.
+#### Moving active pkmn out of the sidebars
 
-Unfortunately, this also means that the sidebar info would constantly be shifting every time a switch is made.  The sidebars would also likely show outdated info for anyone with lag, or for everyone in speed mode when Pokemon are switched out very quickly.  
+We could add a custom GUI that doesn't popup but rather stays in place the whole match, and displays info of the active pkmn (2 in singles, up to 4 in doubles).  This frees up more space for player bets and othe sidebar info, especially in 4v4 - 6v6.
+
+Moving the "Team Blue's x used y" text to the bottom of the screen would give more space for this concept, although our ability to do this is still very limited.  
+
 In singles, the sidebar might be showing Pokemon 1 and 3, with 2 being in the active gui.  
 In doubles, the sidebar might be showing Pokemon 2 and 4, with 3 and 1 being in the active gui.
 
@@ -174,8 +177,9 @@ In doubles, the sidebar might be showing Pokemon 2 and 4, with 3 and 1 being in 
 
 # Match retrying & cancelling
 
+As per mods' request, matches that break over 2 minutes after starting will be automatically cancelled, instead of retried via emulator restart.
+
 1. Best way to deal with softlock from 0pp + more than one of the same move?
-1. Should matches that break after starting be automatically retried?
 1. Should `!cancelmatch bluewins` be a thing?
 
 
@@ -210,8 +214,6 @@ You first select your move, and then the target for that move.
 [Ax6's targeting proposal](https://gist.github.com/aaaaaa123456789/d9e3a0363b4234e5d76e63da5216e640)
 
 
-
-
 # Input selection process (moves, switch, targeting)
 
 ## Atomic inputs
@@ -223,17 +225,35 @@ If we make selections atomic, we would also prevent selection of the same move t
 
 Another benefit is less delay when someone forgets to change move / tries to stall / leaves the stream / etc, particularly in Fragile mode.
 
-This is more punishing for players, especially with pokesets with less than max PP, and since PP is very hard to read on the overlay.
+This is more punishing for players who:
+ - react too slowly
+ - have difficulty reading PP (even though it's much easier to readnow)
+ - miss the effects of Taunt, Torment, etc. that make their input invalid, as it will not be possible for the player to select an alternate input.
 
 ## Ally targeting
 
-Some have suggested disallowing ally targeting, but ally targeting does have many strategic uses, such as:
+Some have suggested disallowing ally targeting some or all of the time, but ally targeting does have many strategic uses, such as:
 
 **Moves**: sketch, transform, pain split, swagger, flatter, psych up, role play, power/guard/heart swap, acupressure, trick, switcheroo, embargo, mimic, sketch, worry seed, skill swap  
 **Abilities**: water/volt absorb, motor drive, steadfast, anger point, flash fire, marvel scale, guts, quick/tangled feet, dry skin, poison heal, blaze/torrent/overgrow/swarm, own tempo
 
-Ally targeting in defiance is another question. Should it never happen? Happen 10-20% of the time? Should we have two doubles defiance modes, one with ally targeting and the other without?
+Ally targeting for doubles defiance in currently set to:
 
+Key: `60%: 2%` means, `60%` of matches have a `2%` ally-target chance.
+
+Note: a 25% ally-target chance currently shows up as `20% 20% 30% 30%` (self, ally, left foe, and right foe respectively).  This is because self-targeting is impossible for all ally-hit moves, with the exception of Acupressure, so the 25% comes from 20% / (20% + 30% + 30%)  This may be simplified to "Ally-hit chance: 25%" in the future.
+
+```
+35%: 0%
+25%: 2%
+20%: 5%
+10%: 10%
+ 7%: 25%
+ 3%: 33%
+```
+as per a public-dev poll.
+ 
+We might also move ally-target chance into a mode, for aesthetic purposes.  We'd need an icon though.
 
 # Battle Royale
 
@@ -276,16 +296,17 @@ Do we need to remove/replace moves like surf for being OP?
 [Ax6's targeting proposal](https://gist.github.com/aaaaaa123456789/d9e3a0363b4234e5d76e63da5216e640)
 
 ### Imgur albums
-
-[Ugly doubles & 4v4 overlay examples](https://imgur.com/a/MkYUCXV)  
-[Current overlay screenshots](https://imgur.com/a/rtzhZWZ)  
+[Temporary overlay redesign concepts 2019-03](https://imgur.com/a/d0neSaT)  
+[Temporary overlay redesign concepts 2019-01](https://imgur.com/a/MkYUCXV)  
+[2018 overlay](https://imgur.com/a/rtzhZWZ)  
 [Streamer's & Stadium 2 overlays](https://imgur.com/a/83rNOMn)
 
-### Reddit links
+### Other links
 
-[Official streamer's overlay thread](http://redd.it/7cmbxw)  
-[Overlay leak thread](http://redd.it/7cjmxz)   
-[Random overlay comments](https://www.reddit.com/r/twitchplaysPokemon/comments/a6tuwu/the_cutest_fusion_ever/ebydsau)
+[Official streamer's overlay reddit thread](http://redd.it/7cmbxw)  
+[Overlay leak reddit thread](http://redd.it/7cjmxz)   
+[Overlay reddit comments](https://www.reddit.com/r/twitchplaysPokemon/comments/a6tuwu/the_cutest_fusion_ever/ebydsau)  
+[Temp overlay feedback from Zadck](https://docs.google.com/document/d/1UO7CrJKuk4KuynJPDRE5_J_iAOnsWA8UEE6BicyVGmE/edit)
 
 ### Videos
 [Doubles Demo](https://www.youtube.com/watch?v=HJI9-ADqrUA)  

@@ -4,24 +4,24 @@
 
 *What we're working on right now.*
 
-### Recruitments (chaos)
-- devs
-- mods
-- art
-- commentary
-- and more
+### Season of Seasons (chaos)
+
+[Details here](https://www.reddit.com/r/twitchplayspokemon/comments/atnkd6/the_seasons_of_seasons_schedule_update_on/)
 
 ### PBR doubles update (ferraro)
+    
+Includes major changes to the PBR overlay. [Details here](/projects/PBR_DOUBLES_UPDATE.md)
 
-[Details here](/projects/PBR_DOUBLES_UPDATE.md)
+
 
 # Future Tasks
 
 *What we plan to work on next, in rough chronological order. Subject to change.*
 
+
+
+
 ### Various PBR tasks (ferraro)
 - Bet-hiding suggestions
-- Try any popular bonus alternatives in a short season
-- Nerf bet bonuses
 - More gimmicks
 - Input decay/timeout suggestions (try out in a gimmick)
