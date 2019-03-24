@@ -14,7 +14,7 @@ Most of this document is info-providing, but a few portions are more heavily opi
 1. [Live data (HP, PP, moves, ability, etc) reading & writing for all Pokemon](#live-data-reading/writing)
 1. Detection of all softlocks
 1. Ability to retry broken matches, both automatically and manually
-1. Faster PBR match setup (45s first start, 30s every match after) which also helps stability
+1. Faster PBR match setup (40s first start, 18s every match after) which also helps stability
 1. Toggleable announcer during matches
 1. Ability to avoid trying the same move / switch more than once (toggle on for defiance at least)
 1. [Atomic input selections](##atomic-inputs)
