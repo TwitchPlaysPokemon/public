@@ -172,9 +172,6 @@ Moving the "Team Blue's x used y" text to the bottom of the screen would give mo
 In singles, the sidebar might be showing Pokemon 1 and 3, with 2 being in the active gui.  
 In doubles, the sidebar might be showing Pokemon 2 and 4, with 3 and 1 being in the active gui.
 
-
-
-
 # Match retrying & cancelling
 
 As per mods' request, matches that break over 2 minutes after starting will be automatically cancelled, instead of retried via emulator restart.
@@ -187,7 +184,7 @@ As per mods' request, matches that break over 2 minutes after starting will be a
 
 # Targeting notation
 
-## Background
+### Background
 
 [See doubles screens here](https://imgur.com/a/MkYUCXV)
 
@@ -196,22 +193,32 @@ banette -> caterpie -> persian -> entei
 aka  
 upper blue -> lower blue -> upper red -> lower red (going by the HP bar positions)  
 aka  
-blue's left mon -> blue's right mon -> red's left mon -> red's right mon (going by   trainer POV)
+blue's left mon -> blue's right mon -> red's left mon -> red's right mon (going by trainer POV)
 
 You first select your move, and then the target for that move.
 
 [See here for special targeting cases](https://bulbapedia.bulbagarden.net/wiki/Double_Battle#Effects_on_moves)
 
-## General goals
+### General goals
 
 - easy to explain and learn
 - easy to make inputs (including on mobile)
 - easy to understand inputs made by others
 - both newbie and expert friendly
 
-## Proposals
+### Proposals
 
 [Ax6's targeting proposal](https://gist.github.com/aaaaaa123456789/d9e3a0363b4234e5d76e63da5216e640)
+
+### Active Pokemon positioning
+
+If the active pokemon on a side are positioned left to right, the targeting notation of `L` and `R` makes the most sense. But if the active pokemon are positioned top and bottom, we may want to change that notation to `U` (upper) and `L` (lower) or similar. 
+
+Note that the PBR HUD already positions the active pokemon health bars in a top-bottom fashion. 
+
+While the actual Pokemon on the field are positioned in a left-right fashion from the trainer POV, it's far more difficult to see this than it is in a gen 6 double battle.  The camera rarely shows all four Pokemon at the same time- usually it just focuses on each of them in turn, or on both pokemon on a single team. Even when Pokemon attack, it's often difficult to tell the positions of either the attacker or defender.
+
+There's also the fact that the red trainer's left-side pokemon is always to the right of their right-side pokemon, due to the camera angle.  
 
 
 # Input selection process (moves, switch, targeting)
