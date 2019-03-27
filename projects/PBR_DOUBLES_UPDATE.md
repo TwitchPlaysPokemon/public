@@ -130,6 +130,8 @@ While the new overlay is being worked on for a potentially long time, we have re
 
 The redesign concepts were heavily influenced from multiple past overlays (see [Imgur Albums](###imgur-albums)) and also the "New Overlay", although the latter has not been released to the public yet.
 
+Both the 2018 pbr overlay and 2019 temporary redesign are limited in their ability to support partial transparency. An overlay pixel is either solid a color or transparent- no slight darkening with opacity is possible.  This technical limitation is hoped to be overcome in the coding of the New Overlay.
+
 Popularly requested improvements on the old (2018) overlay included:
 
 - Show live pkmn data (HP, PP, etc)
