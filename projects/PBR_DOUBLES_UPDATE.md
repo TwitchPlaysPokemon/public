@@ -1,16 +1,12 @@
 # Preface 
 
-We plan to set up a demo for players before deciding various things, but to do so we'll first need to add some degree of overlay support for doubles targeting.
-
 Most of this document is info-providing, but a few portions are more heavily opinion-based, and should just be considered as points for discussion.
 
 # Features
 
-*Might be deployed in phases, e.g. defiance doubles after anniversary run, then doubles with targeting some time later, and battle royale some time after that.*
-
 ## Deployed
-1. Support for defiance double battles
-1. Overlay support for 1v1 - 4v4
+1. Complete support for defiance double battles
+1. Overlay support for 3v3 & 4v4
 1. [Live data (HP, PP, moves, ability, etc) reading & writing for all Pokemon](#live-data-reading/writing)
 1. Detection of all softlocks
 1. Ability to retry broken matches, both automatically and manually
@@ -22,16 +18,11 @@ Most of this document is info-providing, but a few portions are more heavily opi
 1. Modifiable match timer (a legitimate PBR feature, match ends after x minutes)
 1. Per-mode token match cooldowns
 
-## Complete but needs lots of testing
-1. Support (excluding overlay) for doubles with inputting
-
 ## Pending
-1. Overlay improvements
-1. New gimmick ideas, specific mechanics, icons, and implementations that make use of the already deployed features
+1. Support teams sizes other than 3v3 and 4v4
 1. Global modifications to species, moves, and effectiveness
 1. Battle royale matches (pbr double battles with chat split into four teams)
 1. Mysterious surprise feature (won't affect gameplay)
-
 
 # Live data reading/writing
 
